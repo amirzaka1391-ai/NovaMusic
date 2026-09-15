@@ -19,6 +19,12 @@ jobs:
           mkdir extracted
           unzip -q NovaMusic_OnlineBuild_FIXED.zip -d extracted
 
+      - name: Fix MainActivity imports
+        run: |
+          cd extracted/NovaMusic
+          grep -q '^import android.net.Uri$' app/src/main/java/com/example/novamusic/MainActivity.kt || \
+            sed -i '2i import android.net.Uri' app/src/main/java/com/example/novamusic/MainActivity.kt
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
